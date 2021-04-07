@@ -11,9 +11,10 @@ class App extends Component {
     bad: 0,
   };
 
-  incrementFeedback = options => {
+  incrementFeedback = e => {
+    const name = e.target.name;
     this.setState(prevState => {
-      return { [options]: prevState[options] + 1 };
+      return { [name]: prevState[name] + 1 };
     });
   };
 
@@ -36,25 +37,26 @@ class App extends Component {
     const options = Object.keys(this.state);
     const total = this.countTotalFeedback();
     const positivePercentage = this.countPositiveFeedbackPercentage();
-    
+
     return (
-      <Section>
-        <Title title="Please leave feedback" />
-        {options.map(option => (
+      <>
+        <Section>
+          <Title title="Please leave feedback" />
+
           <FeedbackOptions
-            key={option}
-            options={option}
+            options={options}
             onLeaveFeedback={this.incrementFeedback}
           />
-        ))}
-        <Statistics
-          good={good}
-          bad={bad}
-          neutral={neutral}
-          total={total}
-          positivePercentage={positivePercentage}
-        />
-      </Section>
+
+          <Statistics
+            good={good}
+            bad={bad}
+            neutral={neutral}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        </Section>
+      </>
     );
   }
 }
